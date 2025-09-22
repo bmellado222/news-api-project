@@ -1,36 +1,30 @@
 from src.api.news_api import NewsAPIClient
 from src.helpers.news_helpers import (
-    display_articles
-    # save_results_to_csv
+    display_articles,
+    save_results_to_csv
 )
 
 
 def main():
     """Main function to demonstrate News API"""
 
+    keywords = ["trump", "biden", "python", "ai", "climate change"]
+
     try:
         client = NewsAPIClient()
 
-        print("===== Searching for every news article with Keyword: 'python' =====")
-        news_data = client.search_everything("trump", page_size=5)
+        for keyword in keywords:
+            print(f"===== Searching for every news article with Keyword: '{keyword}' =====")
 
-        if news_data:
-            display_articles(news_data)
+            news_data = client.search_everything(keyword, page_size=5)
 
-        print("\n" + "=" * 80 + "\n")
+            if news_data:
+                display_articles(news_data)
+                save_results_to_csv(news_data, keyword)
+            else:
+                print(f"No data found for keyword: {keyword}")
 
-        print("===== Searching for every news article with Keyword: 'ai' =====")
-        ai_news = client.search_everything(
-            "ai",
-            page_size=3,
-            language="en",
-            sort_by="popularity",
-        )
-
-        if ai_news:
-            display_articles(ai_news)
-
-        print("\n" + "=" * 80 + "\n")
+            print("\n" + "=" * 80 + "\n")
 
     except ValueError as e:
         print(f"Configuration error: {e}")

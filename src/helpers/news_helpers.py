@@ -1,8 +1,7 @@
-# import json
-# import csv
-# from datetime import datetime
-# import os
-# ^ ALL For later ^
+import os
+import csv
+from datetime import datetime
+
 
 def display_articles (news_data, max_description_length=200):
     """
@@ -34,4 +33,51 @@ def display_articles (news_data, max_description_length=200):
         print(f"   Description: {description}")
         print(f"   URL: {article.get('url', 'No URL')}")
 
-# def save_results_to_csv:
+
+def save_results_to_csv(news_data, keyword, filename="search_results.csv"):
+    """
+    Saves article results to CSV file.
+
+    :param news_data: JSON response from the News API.
+    :param keyword: The keyword used for the search.
+    :param filename: The file the data is stored. defaults 'search_results.csv'.
+    :return: str: Path to saved file.
+    """
+    if not news_data or news_data.get('status') != 'ok':
+        print("No valid news data to save")
+        return None
+
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    data_dir = os.path.join(project_root, 'data')
+
+    os.makedirs(data_dir, exist_ok=True)
+
+    filepath = os.path.join(data_dir, filename)
+
+    current_date = datetime.now().strftime("%Y-%m-%d")
+
+    total_results = news_data.get('totalResults', 0)
+
+    try:
+        file_exists = os.path.exists(filepath)
+
+        with open(filepath, 'a', newline='', encoding='utf-8') as f:
+            writer = csv.DictWriter(f, fieldnames=[
+                'keyword', 'total_results', 'date'
+            ])
+
+            if not file_exists:
+                writer.writeheader()
+
+            writer.writerow({
+                'keyword': keyword,
+                'total_results': total_results,
+                'date': current_date
+            })
+
+        print(f"Search results saved to: {filepath}")
+        return filepath
+
+    except Exception as e:
+        print(f"Error saving to CSV: {e}")
+        return None
