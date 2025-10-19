@@ -8,6 +8,5 @@ venv/
 .idea/
 *.iml
 .env
-data/
 output/plots/*
 !output/plots/.gitkeep
