@@ -8,7 +8,7 @@ from src.helpers.news_helpers import (
 def main():
     """Main function to demonstrate News API"""
 
-    keywords = ["trump", "biden", "python", "ai", "climate change"]
+    keywords = ["stock market", "israel", "climate change", "uk", "china"]
 
     try:
         client = NewsAPIClient()
