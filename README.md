@@ -10,7 +10,7 @@ Contains the script's collected data, the collected data is stored as a .csv fil
 There are three main attributes to data collected: the keyword used to search the News API, the total results from that keyword API call, and the date for when the keyword was searched.
 >**/src/api**
 
-Houses the API client for NewsAPI.org, requires an API Key & API URL, filtered for news outlets that are English based. Data recieved is stored as a .json file.
+Houses the API client for NewsAPI.org, requires an API Key & API URL, filtered for news outlets that are English based. Data received is stored as a .json file.
 
 >**/src/helpers**
 
